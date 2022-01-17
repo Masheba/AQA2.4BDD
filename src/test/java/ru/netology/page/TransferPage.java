@@ -1,10 +1,12 @@
-package ru.netology.Page;
+package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.Data.DataHelper;
+import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TransferPage {
@@ -24,4 +26,17 @@ public class TransferPage {
         transferButton.click();
         return new DashboardPage();
     }
+
+    public void successfulTransfer() {
+        $(withText("Операция проведена успешно")).shouldBe(Condition.visible);
+    }
+
+    public void failedTransferFirst() {
+        $(withText("Вы ввели сумму, превышающую остаток средств на Вашем счете. Пожалуйста, введите другую сумму")).shouldBe(Condition.visible);
+    }
+
+    public void failedTransferSecond() {
+        $(withText("Пожалуйста, укажите сумму, которую необходимо ввести")).shouldBe(Condition.visible);
+    }
+
 }

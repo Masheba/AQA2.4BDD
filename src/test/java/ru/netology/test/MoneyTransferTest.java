@@ -1,11 +1,11 @@
-package ru.netology.Test;
+package ru.netology.test;
 
 import com.codeborne.selenide.Condition;
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import ru.netology.Data.DataHelper;
-import ru.netology.Page.DashboardPage;
-import ru.netology.Page.LoginPage;
+import ru.netology.data.DataHelper;
+import ru.netology.page.DashboardPage;
+import ru.netology.page.LoginPage;
 
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
@@ -68,7 +68,7 @@ public class MoneyTransferTest {
         val transferPage = dashboardPage.firstCard();
         val cardInfo = DataHelper.getSecondCardInfo();
         transferPage.makeTransfer(amount, cardInfo);
-        $(withText("Вы ввели сумму, превышающую остаток средств на Вашем счете. Пожалуйста, введите другую сумму")).shouldBe(Condition.visible);
+        transferPage.failedTransferFirst();
     }
 
     @Test
@@ -84,6 +84,6 @@ public class MoneyTransferTest {
         val transferPage = dashboardPage.firstCard();
         val cardInfo = DataHelper.getSecondCardInfo();
         transferPage.makeTransfer(amount, cardInfo);
-        $(withText("Пожалуйста, укажите сумму, которую необходимо ввести")).shouldBe(Condition.visible);
+        transferPage.failedTransferSecond();
     }
 }
